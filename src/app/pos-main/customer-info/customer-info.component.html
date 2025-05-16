@@ -1,0 +1,9 @@
+<div class="">
+    <ng-select class="" [items]="allCustomers" bindLabel="name" bindValue="id" [formControl]="customerIDControl"
+        [searchable]="true" [clearable]="false">
+        <!-- Label shown in dropdown options -->
+        <ng-template ng-option-tmp let-item="item">
+            {{ item.name }} ({{ item.id }})
+        </ng-template>
+    </ng-select>
+</div>

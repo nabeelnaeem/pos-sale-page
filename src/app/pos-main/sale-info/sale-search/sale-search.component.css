@@ -1,0 +1,12 @@
+.hover-active {
+    opacity: 85%;
+}
+
+.hover-active:hover {
+    background-color: #0d6efd;
+    /* Bootstrap primary */
+    color: white;
+    cursor: pointer;
+    opacity: 100%;
+
+}

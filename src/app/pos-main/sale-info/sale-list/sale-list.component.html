@@ -1,0 +1,43 @@
+<div class="row fw-bold bg-warning align-items-center border border-0 rounded-1 mx-0">
+    <div class="col-12 col-sm-1 ">
+    </div>
+    <div class="col-12 col-sm-3">
+        Item
+    </div>
+    <div class="col-12 col-sm-2 text-center">
+        Price
+    </div>
+    <div class="col-12 col-sm-2 text-center">
+        QTY
+    </div>
+    <div class="col-12 col-sm-2 text-center">
+        Discount
+    </div>
+    <div class="col-12 col-sm-2 text-center">
+        SubTotal <br>
+    </div>
+
+</div>
+@for (item of items; track item; let i = $index) {
+<div class="row border-bottom py-2 align-items-center mx-0">
+    <div class="col-12 col-sm-1">
+        <button type="button" class="btn btn-danger btn-sm py-0" (click)="onProductRemove(item, i)">X</button>
+    </div>
+    <div class="col-12 col-sm-3 ">
+        {{item.name}}
+    </div>
+    <div class="col-12 col-sm-2 text-center">
+        <!-- {{item.sellingRate | currency:'USD':'symbol':'1.0-0'}} -->
+        {{item.sellingRate | currency}}
+    </div>
+    <div class="col-12 col-sm-2 text-center">
+        <input type="number" [(ngModel)]="item.stockQuantity" (change)="qtyChange(i)" class="form-control text-center">
+    </div>
+    <div class="col-12 col-sm-2 text-center">
+        {{item.discount * item.stockQuantity | currency}}
+    </div>
+    <div class="col-12 col-sm-2 text-center">
+        {{item.stockQuantity * (item.sellingRate) | currency}}
+    </div>
+</div>
+}

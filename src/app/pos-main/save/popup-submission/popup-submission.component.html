@@ -1,0 +1,41 @@
+<div class="modal-header bg-success">
+    <h5 class="modal-title">Sale Submitted</h5>
+    <button type="button" class="btn-close" aria-label="Close" (click)="close.emit()"></button>
+</div>
+<div class="modal-body">
+    <div class="mx-3 text-end">
+    <b>CustomerID:</b> {{customerName(mainForm.get('customerId')?.value)}}
+    </div>
+    <table class="table table-striped">
+
+        <thead>
+        <tr>
+            <th>Product Name</th>
+            <th>Quantity</th>
+            <th>Unit Price</th>
+        </tr>
+        </thead>
+        <tbody>
+    @for (item of saleItemsArray.value; track $index) {
+        <tr>
+            <td>{{productName(item.productId)}}</td>
+            <td>{{item.quantity}}</td>
+            <td>{{item.unitPrice|currency}}</td>
+        </tr>
+    }
+        </tbody>
+    </table>
+    <div class="text-end mx-3">
+    <b>Discount:</b> {{discount}}
+    @for (item of paymentsArray.value; track $index) {
+    <br>
+    <b>Total:</b> {{item.amount}} <br>
+    <b>Payment Method: </b>{{item.paymentMethod['id']}}
+    }
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-danger" (click)="close.emit()">Close</button>
+    <button type="button" class="btn btn-primary">Print Sale</button>
+
+</div>

@@ -1,0 +1,51 @@
+.receipt {
+    width: 80mm;
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    padding: 5px;
+    color: #000;
+}
+
+.center {
+    text-align: center;
+}
+
+.right {
+    text-align: right;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+hr {
+    border: none;
+    border-top: 1px dashed black;
+    margin: 8px 0;
+}
+
+.total {
+    font-weight: bold;
+}
+
+@media print {
+    body {
+        margin: 0;
+    }
+
+    body * {
+        visibility: hidden;
+    }
+
+    #print-section,
+    #print-section * {
+        visibility: visible;
+    }
+
+    #print-section {
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+}

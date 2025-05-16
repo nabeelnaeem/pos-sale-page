@@ -1,0 +1,30 @@
+<div>
+    <button (click)="printReceipt()">Print Receipt</button>
+</div>
+
+<div id="print-section" class="receipt">
+    <h3 class="center">My Store</h3>
+    <p>Date: {{ sale.date | date: 'short' }}</p>
+    <p>Receipt #: {{ sale.id }}</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Item</th>
+                <th class="right">Qty</th>
+                <th class="right">Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of sale.items">
+                <td>{{ item.name }}</td>
+                <td class="right">{{ item.quantity }}</td>
+                <td class="right">{{ item.price | currency:'USD':'symbol':'1.0-0' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <hr>
+    <p class="right total">Total: {{ sale.total | currency:'USD':'symbol':'1.0-0' }}</p>
+    <p class="center">Thank you for shopping!</p>
+</div>

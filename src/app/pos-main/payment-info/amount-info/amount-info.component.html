@@ -1,0 +1,48 @@
+<div
+    class="d-flex justify-content-between align-items-center fs-6 fw-normal border-bottom border-2 border-dark-subtle p-2 rounded mx-1 my-2">
+    <div>
+        Subtotal
+    </div>
+    <div>
+        {{subtotal()|currency}}
+    </div>
+
+</div>
+
+<div
+    class="d-flex justify-content-between fs-6 fw-normal border-bottom border-2 border-dark-subtle p-2 rounded mx-1 my-2">
+    <div>
+        Item Discount
+    </div>
+    <div>
+        {{itemDiscount()|currency}}
+    </div>
+</div>
+<div
+    class="d-flex justify-content-between align-items-center fs-6 fw-normal border-bottom border-2 border-dark-subtle p-2 rounded mx-1 my-2">
+    <div>
+        Cashier Discount
+    </div>
+    <div class="col-6 col-md-4">
+        <input type="number" name="cashierDiscount" [(ngModel)]="cashierDiscount" (input)="setAmounts()"
+            class="form-control">
+    </div>
+</div>
+<div
+    class="d-flex justify-content-between align-items-center fs-6 text-success fw-medium border-bottom border-2 border-dark-subtle p-2 rounded mx-1 my-2">
+    <div>
+        Total Discount
+    </div>
+    <div>
+        {{totalDiscount()|currency}}
+    </div>
+</div>
+<div
+    class="d-flex justify-content-between fs-5 fw-bold border-bottom border-2 border-dark-subtle p-2 rounded mx-1 my-3">
+    <div>
+        TOTAL
+    </div>
+    <div>
+        {{totalAmount()|currency}}
+    </div>
+</div>

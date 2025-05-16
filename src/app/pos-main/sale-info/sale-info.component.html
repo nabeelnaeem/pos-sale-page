@@ -1,0 +1,10 @@
+<div class="d-flex flex-column gap-1">
+    <div class="bg-primary p-3 mt-0">
+        <app-sale-search (productSelected)="onProductAdded($event)"></app-sale-search>
+    </div>
+    <div class="pb-3 mb-5">
+        <app-sale-list (productToRemove)="onProductRemove($event)" (qtyChangedEvent)="onQtyChange($event)"
+            [items]="selectedItems"></app-sale-list>
+    </div>
+</div>
+<button type="button" class="d-none" (click)="display()">Display Info</button>
