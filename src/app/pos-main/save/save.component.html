@@ -1,7 +1,7 @@
 <div class="modal fade show" tabindex="-1" style="display: block;" role="dialog" aria-modal="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <app-popup-submission (close)="closeModal()" [mainForm]="mainForm"></app-popup-submission>
+            <app-popup-submission (close)="closeModal()" (print)="print.emit()" [mainForm]="mainForm"></app-popup-submission>
         </div>
     </div>
     <div class="modal-backdrop fade show z-n1"></div>

@@ -101,4 +101,16 @@ export class SaleInfoComponent {
         const itemDiscount = this.selectedItems.reduce((sum, product) => sum + ((product.discount) * product.stockQuantity), 0)
         this.ahs.setAmounts(subtotal, itemDiscount);
     }
+    reset(){
+        // Clear selected items
+        this.selectedItems = [];
+
+        // Clear the saleItems FormArray
+        while (this.saleItems.length !== 0) {
+            this.saleItems.removeAt(0);
+        }
+
+        // Reset any amounts (if applicable)
+        this.ahs.setAmounts(0, 0);
+    }
 }

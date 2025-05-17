@@ -1,30 +1,50 @@
-<div>
-    <button (click)="printReceipt()">Print Receipt</button>
-</div>
+<div class="modal fade show" tabindex="-1" style="display: block;" role="dialog" aria-modal="true">
+    <div class="modal-dialog modal-dialog-centered modal-fit-content">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div>
+                    <!-- <button (click)="printReceipt()">Print Receipt</button> -->
+                    <button (click)="generatePDF()">Download PDF</button>
+                </div>
+                <div id="print-section" class="receipt">
+                    <h3 class="center">Bill Details</h3>
+                    <p>Date: {{ Date() | date: 'short' }}</p>
+                    <p>Receipt #: {{ 100 }}</p>
+                    <p>Customer: {{customerName(mainForm.get('customerId')?.value)}}</p>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th class="right">Qty</th>
+                                <th class="right">Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (item of saleItemsArray.value; track $index) {
+                            <tr>
+                                <td>{{productName(item.productId)}}</td>
+                                <td class="right">{{item.quantity}}</td>
+                                <td class="right">{{item.unitPrice|currency}}</td>
+                            </tr>}
+                        </tbody>
+                    </table>
 
-<div id="print-section" class="receipt">
-    <h3 class="center">My Store</h3>
-    <p>Date: {{ sale.date | date: 'short' }}</p>
-    <p>Receipt #: {{ sale.id }}</p>
+                    <hr>
+                    <p class="right my-0">SubTotal: {{totalAmount |currency:'USD':'symbol':'1.0-0'}}</p>
+                    <p class="right my-0">Discount: {{discount |currency:'USD':'symbol':'1.0-0'}}</p>
+                    @for (item of paymentsArray.value; track $index) {
+                    <p class="right total my-0 fs-6">Total: {{ item.amount | currency:'USD':'symbol':'1.0-0' }}</p>
+                    <p class="right">Payment Method: {{item.paymentMethod['id']}}</p>
+                    }
+                    <p class="center">Thank you for shopping!</p>
+                    <div class="cut"></div>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Item</th>
-                <th class="right">Qty</th>
-                <th class="right">Price</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let item of sale.items">
-                <td>{{ item.name }}</td>
-                <td class="right">{{ item.quantity }}</td>
-                <td class="right">{{ item.price | currency:'USD':'symbol':'1.0-0' }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <hr>
-    <p class="right total">Total: {{ sale.total | currency:'USD':'symbol':'1.0-0' }}</p>
-    <p class="center">Thank you for shopping!</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" (click)="close.emit()">Close</button>
+            </div>
+        </div>
+    </div>
+    <div class="modal-backdrop fade show z-n1"></div>
 </div>

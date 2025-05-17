@@ -14,6 +14,9 @@ export class CustomerInfoComponent implements OnInit {
     allCustomers = Customer.customerList;
 
     ngOnInit(): void {
+        this.default();
+    }
+    default(){
         const counterSale = this.allCustomers.find(customer => customer.name.toLocaleLowerCase() === 'Counter Sale'.toLocaleLowerCase())
         if (counterSale) {
             this.customerIDControl.setValue(counterSale.id);

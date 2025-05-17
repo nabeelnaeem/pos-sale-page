@@ -1,5 +1,5 @@
-<app-save *ngIf="showSave" (close)="showSave = false" [mainForm]="mainSaleForm"></app-save>
-
+<app-reciept *ngIf="showPrint" (close)="closePopup()" [mainForm]="mainSaleForm" [dateTime]="dateTime" draggable="true"></app-reciept>
+<app-save (print)="printServices()" *ngIf="showSave" (close)="closePopup()" [mainForm]="mainSaleForm"></app-save>
 <div class="bg-light p-3 rounded-4">
     <app-top-info></app-top-info>
     <form class="row" [formGroup]="mainSaleForm" (ngSubmit)="onSubmit()">
@@ -19,7 +19,6 @@
             </div>
             <div class="mt-auto mb-3">
                 <button type="submit" class="btn btn btn-success w-100" [disabled]="!mainSaleForm.valid" (click)="showSave = true">Save Sale</button>
-                FormValid? : {{mainSaleForm.valid}}
             </div>
         </div>
     </form>

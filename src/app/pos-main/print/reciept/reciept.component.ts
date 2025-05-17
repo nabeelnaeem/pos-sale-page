@@ -1,5 +1,13 @@
 import { CurrencyPipe, DatePipe } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import { PopupSubmissionComponent } from '../../save/popup-submission/popup-submission.component';
+import { FormArray, FormGroup } from '@angular/forms';
+import { CustomerService } from '../../../services/customer.service';
+import { ProductService } from '../../../services/product.service';
+import { jsPDF } from 'jspdf';
+import html2canvas from 'html2canvas';
+
+
 
 @Component({
     selector: 'app-reciept',
@@ -8,39 +16,68 @@ import { Component } from '@angular/core';
     styleUrl: './reciept.component.css'
 })
 export class RecieptComponent {
-    sale = {
-        date: new Date(),
-        id: '123456',
-        items: [
-            { name: 'Product A', quantity: 2, price: 4.5 },
-            { name: 'Product B', quantity: 1, price: 2.0 },
-            { name: 'Product C', quantity: 3, price: 3.75 }
-        ],
-        get total() {
-            return this.items.reduce((sum, item) => sum + item.price * item.quantity, 0);
-        }
-    };
 
-    printReceipt() {
-        const printContent = document.getElementById('print-section')!.innerHTML;
-        const popupWin = window.open('', '_blank', 'width=300,height=600');
 
-        if (popupWin) {
-            popupWin.document.open();
-            popupWin.document.write(`
-        <html>
-          <head>
-            <title>Print Receipt</title>
-            <style>
-              ${document.querySelector('style')?.innerText || ''}
-            </style>
-          </head>
-          <body onload="window.print(); window.close();">
-            ${printContent}
-          </body>
-        </html>
-      `);
-            popupWin.document.close();
-        }
+    custServ = inject(CustomerService);
+    prodServ = inject(ProductService);
+    @Output() close = new EventEmitter<void>();
+    @Input() mainForm!: FormGroup;
+    @Input() dateTime!: Date;
+    customerName(id: string): string {
+        return this.custServ.getCustomerName(id);
     }
+
+    productName(id: string): string {
+        return this.prodServ.getProductName(id);
+    }
+
+    get discount() {
+        return this.mainForm.get('discount')?.value;
+    }
+
+    get saleItemsArray() {
+        return this.mainForm.get('saleItems') as FormArray;
+    }
+
+    get paymentsArray() {
+        return this.mainForm.get('payments') as FormArray;
+    }
+
+    get totalAmount() {
+        return this.saleItemsArray.controls.reduce((sum, control) => {
+            const unitPrice = control.get('unitPrice')?.value || 0;
+            return sum + unitPrice;
+        }, 0)
+    }
+    generatePDF() {
+        const receiptElement = document.getElementById('print-section');
+        if (!receiptElement) return;
+
+        const scale = 2;
+        html2canvas(receiptElement, { scale }).then((canvas) => {
+            const imgData = canvas.toDataURL('image/png');
+
+            const pdfWidth = 80; // mm width of thermal receipt
+            const pxPerMm = (96 * scale) / 25.4; // pixels per mm adjusted for scale
+
+            // Calculate height in mm to keep aspect ratio
+            const imgHeight = canvas.height / pxPerMm * (pdfWidth / (canvas.width / pxPerMm));
+
+            // Simplify:
+            // const imgHeight = (canvas.height * pdfWidth) / canvas.width / pxPerMm;
+
+            const pdf = new jsPDF({
+                orientation: 'portrait',
+                unit: 'mm',
+                format: [pdfWidth, imgHeight],
+            });
+
+            pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, imgHeight);
+            const now = new Date();
+            const formattedDateTime = now.toISOString().replace(/[:.]/g, '-'); // "2025-05-16T12-30-45-123Z"
+            pdf.save('receipt' + formattedDateTime + '.pdf');
+        });
+    }
+
+    protected readonly Date = Date;
 }

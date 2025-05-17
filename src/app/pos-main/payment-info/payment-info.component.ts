@@ -30,4 +30,16 @@ export class PaymentInfoComponent implements OnInit {
             this.ahs.totalDiscount.set(!isNaN(parsed) ? parsed : 0);
         });
     }
+    reset() {
+        // Clear all payments
+        while (this.paymentsInputArray.length > 0) {
+            this.paymentsInputArray.removeAt(0);
+        }
+
+        // Reset discount value
+        this.discountControl.setValue(0, { emitEvent: false });
+
+        // Reset internal signal in the service
+        this.ahs.totalDiscount.set(0);
+    }
 }

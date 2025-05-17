@@ -1,8 +1,11 @@
-<div class="row bg-black p-3 mb-2 fw-bold border border-light rounded">
-    <div class="col-9 text-center text-secondary">
-        DEMO POS SALE PAGE (DESIGNED BY NABEEL)
+@if (showDevInfo){
+    <app-about-dev (close)="hideInfo()"></app-about-dev>
+}
+<div class="row bg-dark p-3 mb-2 fw-bold border border-light rounded-5">
+    <div class="col-12 col-md-8 col-lg-9 text-center text-light pointer" (click)="showInfo()">
+        DEMO POS SALE PAGE <u class="text-warning">(DESIGNED BY NABEEL)</u>
     </div>
-    <div class="col-3 text-center text-secondary">
+    <div class="col-12 col-md-4 col-lg-3 text-center text-light">
         {{datetimeNow.toLocaleString()}}
     </div>
 </div>

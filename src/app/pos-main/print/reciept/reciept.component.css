@@ -29,6 +29,33 @@ hr {
     font-weight: bold;
 }
 
+.modal-fit-content {
+    display: table;
+    /* Shrink to fit content */
+    margin: 0 auto;
+    /* Horizontal centering */
+}
+
+.modal-fit-content.modal-dialog-centered {
+    display: table;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.modal-fit-content .modal-content {
+    width: auto;
+}
+
+#print-section {
+    width: 80mm;
+    padding: 5mm;
+    box-sizing: border-box;
+    font-family: monospace, Arial, sans-serif;
+}
+
 @media print {
     body {
         margin: 0;
@@ -44,8 +71,9 @@ hr {
     }
 
     #print-section {
-        position: absolute;
-        left: 0;
-        top: 0;
+        width: 80mm;
+        padding: 5mm;
+        box-sizing: border-box;
+        font-family: monospace, Arial, sans-serif;
     }
 }
